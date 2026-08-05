@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wildlife Conservation · Sign In / Sign Up</title>
+    <style>
+        /* ----- RESET & BASE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #1a2e1a;
+        }
+
+        /* ----- HEADER (forest gradient + paw logo) ----- */
+        header {
+            background: linear-gradient(145deg, #1a4a2a, #2d6a3d);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+            border-bottom: 4px solid #f5c542;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 80px;
+            margin: 10px 20px 10px 10px;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .brand {
+            color: #f5f0d7;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #0f2a12;
+        }
+
+        .brand span {
+            color: #f5c542;
+        }
+
+        /* ----- NAVIGATION BAR (earthy) ----- */
+        nav {
+            background: #2a4a2a;
+            border-bottom: 3px solid #f5c542;
+            position: relative;
+            z-index: 2;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #f5f0d7;
+            text-decoration: none;
+            display: block;
+            padding: 14px 42px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: background 0.25s;
+            letter-spacing: 0.5px;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        nav ul li:last-child a {
+            border-right: none;
+        }
+
+        /* hover effect – warm amber */
+        nav ul li:hover {
+            background: #b87c2e;
+        }
+
+        /* ----- DROPDOWN (wildlife sub-items) ----- */
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #3d6b41;
+            min-width: 190px;
+            list-style: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 8px 8px;
+            padding: 0;
+        }
+
+        .dropdown li {
+            width: 100%;
+        }
+
+        .dropdown li a {
+            padding: 14px 22px;
+            color: #f5f0d7;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+            font-size: 0.98rem;
+            border-right: none;
+        }
+
+        .dropdown li:last-child a {
+            border-bottom: none;
+        }
+
+        .dropdown li a:hover {
+            background: #f5c542;
+            color: #1e3a1e;
+        }
+
+        /* show dropdown on hover */
+        nav ul li:hover .dropdown {
+            display: block;
+        }
+
+        /* ----- MAIN CONTAINER (FULL BACKGROUND IMAGE) ----- */
+        .container {
+            /* === WILDLIFE BACKGROUND IMAGE (from Magnific) === */
+            background: url('https://img.magnific.com/premium-photo/national-wildlife-background-exploring-rich-tapestry-national-wildlife-conservation-vit_483187-6585.jpg?semt=ais_hybrid&w=740&q=80') center/cover no-repeat fixed;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            padding: 70px 20px;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 500px;
+        }
+
+        /* semi-transparent overlay to make forms readable */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(20, 40, 20, 0.35);
+            z-index: 0;
+        }
+
+        .box {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ----- FORM BOXES (nature inspired) ----- */
+        .box {
+            background: rgba(255, 248, 235, 0.95);
+            backdrop-filter: blur(2px);
+            width: 340px;
+            max-width: 100%;
+            padding: 34px 30px;
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0, 20, 0, 0.5);
+            border: 2px solid #f5c542;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 50px rgba(0, 30, 0, 0.55);
+        }
+
+        .box h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #1e4a2b;
+            font-weight: 700;
+            font-size: 1.9rem;
+            letter-spacing: 1px;
+            border-bottom: 3px solid #f5c542;
+            padding-bottom: 10px;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ----- FORM ELEMENTS ----- */
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 8px;
+            color: #1e3a1e;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            margin-top: 6px;
+            margin-bottom: 18px;
+            border: 2px solid #b7c9b0;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            background: #fcfcf5;
+            transition: 0.25s;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #f5c542;
+            box-shadow: 0 0 0 4px rgba(245, 197, 66, 0.2);
+            background: #ffffff;
+        }
+
+        /* submit button – earthy green */
+        input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            background: #2d6a3b;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.25s;
+            letter-spacing: 0.8px;
+            margin-top: 8px;
+            box-shadow: 0 6px 14px rgba(45, 106, 59, 0.4);
+            border: 2px solid #f5c542;
+        }
+
+        input[type="submit"]:hover {
+            background: #1a4a2a;
+            transform: scale(1.01);
+            box-shadow: 0 8px 22px rgba(26, 74, 42, 0.5);
+            border-color: #f5c542;
+        }
+
+        /* ----- FOOTER (earthy) ----- */
+        footer {
+            background: #1a3a1a;
+            color: #e8f0d5;
+            text-align: center;
+            padding: 22px 15px 18px;
+            font-size: 1rem;
+            line-height: 1.8;
+            border-top: 4px solid #f5c542;
+            position: relative;
+            z-index: 2;
+        }
+
+        footer p:first-child {
+            font-weight: 600;
+            color: #f5c542;
+            letter-spacing: 0.5px;
+        }
+
+        footer p:last-child {
+            opacity: 0.85;
+            font-size: 0.92rem;
+        }
+
+        /* ----- RESPONSIVE TWEAKS ----- */
+        @media (max-width: 768px) {
+            header {
+                height: 120px;
+                padding-left: 16px;
+                flex-wrap: wrap;
+            }
+            .logo {
+                width: 60px;
+                margin: 8px 12px 8px 0;
+            }
+            .brand {
+                font-size: 1.4rem;
+            }
+            nav ul li a {
+                padding: 12px 22px;
+                font-size: 0.95rem;
+            }
+            .container {
+                gap: 30px;
+                padding: 40px 16px;
+            }
+            .box {
+                width: 100%;
+                max-width: 380px;
+                padding: 28px 22px;
+            }
+            .box h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                justify-content: center;
+            }
+            nav ul li a {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+            .dropdown {
+                min-width: 140px;
+            }
+            .brand {
+                font-size: 1.1rem;
+            }
+            footer {
+                font-size: 0.85rem;
+                padding: 16px 10px;
+            }
+            .container {
+                padding: 30px 12px;
+            }
+            .box {
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER: wildlife logo + brand ===== -->
+    <header>
+        <img src="https://cdn-icons-png.flaticon.com/512/2684/2684775.png" class="logo" alt="Wildlife paw logo" />
+        <div class="brand">🌿 <span>Wild</span>Life <span>Guard</span></div>
+    </header>
+
+    <!-- ===== NAVIGATION BAR ===== -->
+    <nav>
+        <ul>
+            <!-- Home with dropdown (wildlife topics) -->
+            <li>
+                <a href="#">Home</a>
+                <ul class="dropdown">
+                    <li><a href="#">🦁 Big Cats</a></li>
+                    <li><a href="#">🐘 Elephants</a></li>
+                    <li><a href="#">🦜 Birds</a></li>
+                    <li><a href="#">🌳 Forests</a></li>
+                </ul>
+            </li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Model</a></li>
+            <li><a href="#">Others</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN: Sign In & Sign Up with BACKGROUND IMAGE ===== -->
+    <section class="container">
+
+        <!-- SIGN IN FORM -->
+        <div class="box">
+            <h2>🐾 Sign In</h2>
+            <form>
+                <label>Username / Email</label>
+                <input type="text" placeholder="Enter your username" />
+
+                <label>Password</label>
+                <input type="password" placeholder="Enter your password" />
+
+                <input type="submit" value="Sign In 🌿" />
+            </form>
+        </div>
+
+        <!-- SIGN UP FORM -->
+        <div class="box">
+            <h2>🌱 Sign Up</h2>
+            <form>
+                <label>Full Name</label>
+                <input type="text" placeholder="Enter your name" />
+
+                <label>Email</label>
+                <input type="email" placeholder="Enter your email" />
+
+                <label>Password</label>
+                <input type="password" placeholder="Create a password" />
+
+                <input type="submit" value="Sign Up 🌍" />
+            </form>
+        </div>
+
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p>🌍 Wildlife Conservation Trust · 44 Forest Lane, Nairobi</p>
+        <p>© 2026-2027. (22WUCS123) - Web Technology Lab · All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
